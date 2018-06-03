@@ -20,7 +20,9 @@ public class InMemoryPhoneNumberRepository implements PhoneNumberRepository {
 
     @Override
     public PhoneNumber save(PhoneNumber phoneNumber) {
-        phoneNumber.setId(idCounter.incrementAndGet());
+        if (phoneNumber.getId() == null) {
+            phoneNumber.setId(idCounter.incrementAndGet());
+        }
         phoneNumbers.put(phoneNumber.getId(), phoneNumber);
         return phoneNumber;
     }
