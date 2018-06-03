@@ -9,6 +9,8 @@ import lombok.Data;
 public class PhoneNumberDto {
     private Long id;
 
+    private CustomerDto customer;
+
     private boolean active;
 
     private String phoneNumber;

@@ -9,6 +9,8 @@ import lombok.Data;
 public class PhoneNumber {
     private Long id;
 
+    private Customer customer;
+
     private boolean active;
 
     private String phoneNumber;
