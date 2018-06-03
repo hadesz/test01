@@ -2,6 +2,7 @@ package eu.hadesz.test1.repository;
 
 import eu.hadesz.test1.entity.Customer;
 import eu.hadesz.test1.entity.PhoneNumber;
+import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -19,6 +20,14 @@ public class InMemoryPhoneNumberRepositoryTest {
 
     @Autowired
     private PhoneNumberRepository underTest;
+
+    @Autowired
+    private InMemoryPhoneNumberRepository inMemoryPhoneNumberRepository;
+
+    @Before
+    public void init() {
+        inMemoryPhoneNumberRepository.initStartData();
+    }
 
     @Test
     public void save() {
@@ -43,7 +52,7 @@ public class InMemoryPhoneNumberRepositoryTest {
         // THEN
 
         assertNotEquals(null, result);
-        assertEquals(2, result.size());
+        assertEquals(3, result.size());
     }
 
     @Test

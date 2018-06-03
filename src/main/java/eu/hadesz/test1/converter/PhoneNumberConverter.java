@@ -1,6 +1,8 @@
 package eu.hadesz.test1.converter;
 
+import eu.hadesz.test1.dto.CustomerDto;
 import eu.hadesz.test1.dto.PhoneNumberDto;
+import eu.hadesz.test1.entity.Customer;
 import eu.hadesz.test1.entity.PhoneNumber;
 
 import java.util.Collection;
@@ -12,6 +14,8 @@ public class PhoneNumberConverter {
         return PhoneNumber.builder()
                 .id(dto.getId())
                 .phoneNumber(dto.getPhoneNumber())
+                .customer(Customer.builder().id(dto.getCustomer().getId()).name(dto.getCustomer().getName()).build())
+                .active(dto.isActive())
                 .build();
     }
 
@@ -23,6 +27,8 @@ public class PhoneNumberConverter {
         return PhoneNumberDto.builder()
                 .id(entity.getId())
                 .phoneNumber(entity.getPhoneNumber())
+                .customer(CustomerDto.builder().id(entity.getCustomer().getId()).name(entity.getCustomer().getName()).build())
+                .active(entity.isActive())
                 .build();
     }
 

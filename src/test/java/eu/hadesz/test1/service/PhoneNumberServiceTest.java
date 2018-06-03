@@ -1,7 +1,9 @@
 package eu.hadesz.test1.service;
 
 import eu.hadesz.test1.dto.PhoneNumberDto;
+import eu.hadesz.test1.repository.InMemoryPhoneNumberRepository;
 import org.junit.Assert;
+import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -19,6 +21,14 @@ public class PhoneNumberServiceTest {
     @Autowired
     private PhoneNumberService underTest;
 
+    @Autowired
+    private InMemoryPhoneNumberRepository inMemoryPhoneNumberRepository;
+
+    @Before
+    public void init() {
+        inMemoryPhoneNumberRepository.initStartData();
+    }
+
     @Test
     public void getAll() {
         // GIVEN
@@ -28,7 +38,7 @@ public class PhoneNumberServiceTest {
 
         // THEN
         Assert.assertNotEquals(null, result);
-        Assert.assertEquals(2, result.size());
+        Assert.assertEquals(3, result.size());
     }
 
     @Test

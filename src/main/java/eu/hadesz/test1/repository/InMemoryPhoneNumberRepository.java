@@ -16,7 +16,7 @@ public class InMemoryPhoneNumberRepository implements PhoneNumberRepository {
 
     private AtomicLong idCounter = new AtomicLong();
 
-    private Map<Long, PhoneNumber> phoneNumbers = new ConcurrentHashMap<>();
+    private Map<Long, PhoneNumber> phoneNumbers;
 
     @Override
     public PhoneNumber save(PhoneNumber phoneNumber) {
@@ -43,12 +43,21 @@ public class InMemoryPhoneNumberRepository implements PhoneNumberRepository {
     }
 
     public InMemoryPhoneNumberRepository() {
+        initStartData();
+
+    }
+
+    public void initStartData() {
+        phoneNumbers = new ConcurrentHashMap<>();
+        idCounter.set(0);
         Customer customer = Customer.builder().id(-1L).build();
         PhoneNumber phoneNumber = createInitialPhoneNumber("123456", customer);
         phoneNumbers.put(phoneNumber.getId(), phoneNumber);
         phoneNumber = createInitialPhoneNumber("654321", customer);
         phoneNumbers.put(phoneNumber.getId(), phoneNumber);
-
+        customer = Customer.builder().id(-2L).build();
+        phoneNumber = createInitialPhoneNumber("912834", customer);
+        phoneNumbers.put(phoneNumber.getId(), phoneNumber);
     }
 
     private PhoneNumber createInitialPhoneNumber(String s, Customer customer) {
