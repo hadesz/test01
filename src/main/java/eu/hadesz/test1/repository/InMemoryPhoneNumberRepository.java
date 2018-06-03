@@ -5,35 +5,39 @@ import eu.hadesz.test1.entity.PhoneNumber;
 import org.springframework.stereotype.Repository;
 
 import java.util.Collection;
-import java.util.HashMap;
 import java.util.Map;
+import java.util.Objects;
+import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.atomic.AtomicLong;
+import java.util.stream.Collectors;
 
 @Repository
 public class InMemoryPhoneNumberRepository implements PhoneNumberRepository {
 
     private AtomicLong idCounter = new AtomicLong();
 
-    private Map<Long, PhoneNumber> phoneNumbers = new HashMap<>();
+    private Map<Long, PhoneNumber> phoneNumbers = new ConcurrentHashMap<>();
 
     @Override
     public PhoneNumber save(PhoneNumber phoneNumber) {
-        return null;
+        phoneNumber.setId(idCounter.incrementAndGet());
+        phoneNumbers.put(phoneNumber.getId(), phoneNumber);
+        return phoneNumber;
     }
 
     @Override
     public Collection<PhoneNumber> findAll() {
-        return null;
+        return phoneNumbers.values();
     }
 
     @Override
     public PhoneNumber get(Long id) {
-        return null;
+        return phoneNumbers.get(id);
     }
 
     @Override
     public Collection<PhoneNumber> findByCustomer(Customer customer) {
-        return null;
+        return phoneNumbers.values().parallelStream().filter(phoneNumber -> Objects.equals(phoneNumber.getCustomer(), customer)).collect(Collectors.toList());
     }
 
     public InMemoryPhoneNumberRepository() {
